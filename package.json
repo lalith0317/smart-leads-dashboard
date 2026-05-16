@@ -15,7 +15,8 @@
     "server"
   ],
   "devDependencies": {
-    "concurrently": "^9.1.2"
+    "concurrently": "^9.1.2",
+    "typescript-eslint": "^8.59.3"
   },
   "dependencies": {
     "cp": "^0.2.0"
