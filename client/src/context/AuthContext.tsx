@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       booting,
       async login(email, password) {
         try {
-          const response = await api.post<ApiResponse<{ user: User; token: string }>>("/auth/login", { email, password });
+          const response = await api.post<ApiResponse<{ user: User; token: string }>>("api/auth/login", { email, password });
           persistSession(response.data.data.user, response.data.data.token);
         } catch (error) {
           throw new Error(getErrorMessage(error));
@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       },
       async register(name, email, password, role) {
         try {
-          const response = await api.post<ApiResponse<{ user: User; token: string }>>("/auth/register", {
+          const response = await api.post<ApiResponse<{ user: User; token: string }>>("api/auth/register", {
             name,
             email,
             password,
