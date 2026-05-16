@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
 import { Download, LogOut, Moon, Plus, RotateCcw, Search, Sun } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
 import { LeadDetailsModal } from "../components/LeadDetailsModal";
@@ -65,7 +65,7 @@ export const DashboardPage = () => {
     setLoading(true);
     setError("");
     try {
-      const response = await api.get<ApiResponse<{ items: Lead[]; pagination: Pagination }>>("/leads", { params: query });
+      const response = await api.get<ApiResponse<{ items: Lead[]; pagination: Pagination }>>("/api/leads", { params: query });
       setLeads(response.data.data.items);
       setPagination(response.data.data.pagination);
     } catch (nextError) {
@@ -83,9 +83,9 @@ export const DashboardPage = () => {
     setSaving(true);
     try {
       if (editingLead) {
-        await api.patch(`/leads/${editingLead._id}`, payload);
+        await api.patch(`/api/leads/${editingLead._id}`, payload);
       } else {
-        await api.post("/leads", payload);
+        await api.post("/api/leads", payload);
       }
       setEditingLead(undefined);
       await fetchLeads();
@@ -101,7 +101,7 @@ export const DashboardPage = () => {
     if (!confirmed) return;
 
     try {
-      await api.delete(`/leads/${lead._id}`);
+      await api.delete(`/api/leads/${lead._id}`);
       await fetchLeads();
     } catch (nextError) {
       setError(getErrorMessage(nextError));
