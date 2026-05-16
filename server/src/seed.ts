@@ -1,4 +1,4 @@
-import { connectDb } from "./config/db.js";
+import connectDb from "./config/db.js";
 import { Lead } from "./models/Lead.js";
 import { User } from "./models/User.js";
 
