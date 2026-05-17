@@ -15,7 +15,11 @@ const AuthContext = createContext<AuthContextValue | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(() => localStorage.getItem("smart-leads-token"));
+
+  const [token, setToken] = useState<string | null>(() =>
+    localStorage.getItem("smart-leads-token")
+  );
+
   const [booting, setBooting] = useState(Boolean(token));
 
   useEffect(() => {
@@ -25,13 +29,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
 
     api
-      .get<ApiResponse<{ user: User }>>("/auth/me")
-      .then((response) => setUser(response.data.data.user))
+      .get<ApiResponse<{ user: User }>>("/api/auth/me")
+      .then((response) => {
+        setUser(response.data.data.user);
+      })
       .catch(() => {
         localStorage.removeItem("smart-leads-token");
         setToken(null);
+        setUser(null);
       })
-      .finally(() => setBooting(false));
+      .finally(() => {
+        setBooting(false);
+      });
   }, [token]);
 
   const persistSession = (nextUser: User, nextToken: string) => {
@@ -45,27 +54,45 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       user,
       token,
       booting,
+
       async login(email, password) {
         try {
-          const response = await api.post<ApiResponse<{ user: User; token: string }>>("api/auth/login", { email, password });
-          persistSession(response.data.data.user, response.data.data.token);
+          const response = await api.post<
+            ApiResponse<{ user: User; token: string }>
+          >("/api/auth/login", {
+            email,
+            password
+          });
+
+          persistSession(
+            response.data.data.user,
+            response.data.data.token
+          );
         } catch (error) {
           throw new Error(getErrorMessage(error));
         }
       },
+
       async register(name, email, password, role) {
         try {
-          const response = await api.post<ApiResponse<{ user: User; token: string }>>("api/auth/register", {
+          const response = await api.post<
+            ApiResponse<{ user: User; token: string }>
+          >("/api/auth/register", {
             name,
             email,
             password,
             role
           });
-          persistSession(response.data.data.user, response.data.data.token);
+
+          persistSession(
+            response.data.data.user,
+            response.data.data.token
+          );
         } catch (error) {
           throw new Error(getErrorMessage(error));
         }
       },
+
       logout() {
         localStorage.removeItem("smart-leads-token");
         setToken(null);
@@ -75,13 +102,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     [booting, token, user]
   );
 
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = (): AuthContextValue => {
   const context = useContext(AuthContext);
+
   if (!context) {
     throw new Error("useAuth must be used inside AuthProvider");
   }
+
   return context;
 };

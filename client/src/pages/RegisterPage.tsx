@@ -1,6 +1,6 @@
+import { UserPlus } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserPlus } from "lucide-react";
 import { AuthLayout } from "../components/AuthLayout";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
