@@ -11,9 +11,21 @@ import { leadsRouter } from "./routes/leads.routes.js";
 export const app = express();
 
 app.use(helmet());
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://smart-leads-dashboard-client.vercel.app",
+  "https://smart-leads-dashboard-client-q32whsbw4-lalith0317s-projects.vercel.app"
+];
+
 app.use(
   cors({
-    origin: process.env.CLIENT_URL,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true
   })
 );
