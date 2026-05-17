@@ -281,6 +281,29 @@ DELETE /api/leads/:id
 * MongoDB Atlas
 
 ---
+# Screenshots
+
+## Register Page
+
+![Register](./screenshots/register-dark.png)
+
+## Login Page
+
+![Login](./screenshots/login-dark.png)
+
+## Dashboard Dark Mode
+
+![Dashboard Dark](./screenshots/dashboard-dark.png)
+
+## Dashboard Light Mode
+
+![Dashboard Light](./screenshots/dashboard-light.png)
+
+## Create Lead Modal
+
+![Create Lead](./screenshots/create-lead-modal.png)
+
+---
 
 # Security Features
 
