@@ -1,6 +1,6 @@
+import { LogIn } from "lucide-react";
 import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import { LogIn } from "lucide-react";
 import { AuthLayout } from "../components/AuthLayout";
 import { Button } from "../components/Button";
 import { Input } from "../components/Input";
@@ -8,8 +8,8 @@ import { useAuth } from "../context/AuthContext";
 
 export const LoginPage = () => {
   const { login } = useAuth();
-  const [email, setEmail] = useState("admin@smartleads.dev");
-  const [password, setPassword] = useState("Admin@12345");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
